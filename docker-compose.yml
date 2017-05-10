@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+
+  wordpress:
+    build: ./wpsetup/
+    links:
+      - mysql:mysql
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_PASSWORD: wpress
+      WORDPRESS_DB_HOST: mysql
+
+  mysql:
+    image: mariadb:10.1
+    environment:
+      MYSQL_ROOT_PASSWORD: wpress
+      

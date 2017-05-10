@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+WP="./scripts/wp"
+
+$WP core install --url="localhost:8080" --title=wpress --admin_user=wpress --admin_password=wpress --admin_email="wpress@spamgoes.in"
+
+$WP plugin install --activate advanced-custom-fields
+$WP plugin install --activate acf-to-rest-api
+
+$WP option update permalink_structure "/%postname%/"
+
+# ./scripts/import-data

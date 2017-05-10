@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+PASSWD=wpress
+
+set -eux
+
+docker cp wpsetup/setup.sql $(docker-compose ps -q mysql):/setup.sql
+docker-compose exec mysql mysql -p$PASSWD wordpress -e "source /setup.sql"
+
