@@ -16,4 +16,11 @@ services:
     image: mariadb:10.1
     environment:
       MYSQL_ROOT_PASSWORD: wpress
-      
+
+  ngrok:
+    image: wernight/ngrok
+    links:
+      - wordpress:wordpress
+    ports:
+      - 4040:4040
+    command: ngrok http wordpress:80

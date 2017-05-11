@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+URL=$(curl --silent $(docker port $(docker-compose ps -q ngrok) 4040)/api/tunnels | jq -r ".tunnels[0].public_url" | sed -e 's/https/http/' -)
+
 WP="./scripts/wp"
 
-$WP core install --url="localhost:8080" --title=wpress --admin_user=wpress --admin_password=wpress --admin_email="wpress@spamgoes.in"
+$WP core install --url="$URL" --title=wpress --admin_user=wpress --admin_password=wpress --admin_email="wpress@spamgoes.in"
 
 $WP plugin install --activate advanced-custom-fields
 $WP plugin install --activate acf-to-rest-api
@@ -10,3 +12,8 @@ $WP plugin install --activate acf-to-rest-api
 $WP option update permalink_structure "/%postname%/"
 
 # ./scripts/import-data
+
+$WP option update site_url "$URL"
+
+echo Done! Accessible at:
+echo $URL

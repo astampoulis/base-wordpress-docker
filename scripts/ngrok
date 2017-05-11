@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+IP=$(docker inspect $(docker-compose ps -q wordpress) | jq -r ".[0].NetworkSettings.Networks.fgt_default.IPAddress")
+echo $IP
